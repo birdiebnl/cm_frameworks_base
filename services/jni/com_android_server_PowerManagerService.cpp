@@ -119,15 +119,26 @@ static void android_server_PowerManagerService_nativeInit(JNIEnv* env, jobject o
 
 static void android_server_PowerManagerService_nativeSetPowerState(JNIEnv* env,
         jobject serviceObj, jboolean screenOn, jboolean screenBright) {
+
+    LOGD(">>>nativeSetPowerState screenOn : %d  screenBright : %d", screenOn, screenBright );
     AutoMutex _l(gPowerManagerLock);
     gScreenOn = screenOn;
     gScreenBright = screenBright;
+    LOGD("<<<nativeSetPowerState screenOn : %d  screenBright : %d", screenOn, screenBright );
+
 }
 
 static void android_server_PowerManagerService_nativeStartSurfaceFlingerAnimation(JNIEnv* env,
         jobject obj, jint mode) {
     sp<ISurfaceComposer> s(ComposerService::getComposerService());
-    s->turnElectronBeamOff(mode);
+    LOGD("nativeStartSurfaceFlingerAnimation %d  screenOn : %d  screenBright : %d", mode, gScreenOn, gScreenBright );
+    if ( gScreenOn ) {
+        s->turnElectronBeamOn(mode);
+    }
+    else
+    {
+        s->turnElectronBeamOff(mode);
+    }
 }
 
 // ----------------------------------------------------------------------------

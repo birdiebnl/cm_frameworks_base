@@ -484,7 +484,8 @@ void SurfaceFlinger::handleConsoleEvents()
         hw.acquireScreen();
         // this is a temporary work-around, eventually this should be called
         // by the power-manager
-        SurfaceFlinger::turnElectronBeamOn(mElectronBeamAnimationMode);
+        // birdiebnl : Moved to Power-manager
+        // SurfaceFlinger::turnElectronBeamOn(mElectronBeamAnimationMode);
     }
 
     if (mDeferReleaseConsole && hw.isScreenAcquired()) {
@@ -2082,7 +2083,8 @@ status_t SurfaceFlinger::turnElectronBeamOff(int32_t mode)
         // work-around: when the power-manager calls us we activate the
         // animation. eventually, the "on" animation will be called
         // by the power-manager itself
-        mElectronBeamAnimationMode = mode;
+        // birdiebnl : moved to power-manager
+        // mElectronBeamAnimationMode = mode;
     }
     return res;
 }
